@@ -4,7 +4,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/manager/',include('listings.urls')),
+    path('api/manager',include('listings.urls')),
     path('authentication/',include('authentication.urls')),
 ]
 

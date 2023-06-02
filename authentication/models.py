@@ -24,5 +24,4 @@ class User(AbstractUser):
             manager = PasswordManager()
             self.master_password = manager.encrypt(self.master_password)
             self.changed = True
-
         super(User, self).save(*args,**kwargs)
