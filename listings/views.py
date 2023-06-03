@@ -61,26 +61,28 @@ class Service(ModelViewSet):
     def create(self,request):
 
         if request.user.is_authenticated:
-
-                manager = PasswordManager()
                 
                 try:
-                    service = request.data.get('service')
-                    passphrase = request.data.get("passphrase")
+                    
+                    name = request.data.get('name')
+                    login = request.data.get("login")
+                    password = request.data.get('password')
+                    image = request.data.get('image')
+                    
                 except:
-                    return Response({"error": "Invalid master password"})
+                    return Response({"status": "false"})
                 
                 user = request.user
 
                 try:
-                    service = Services.objects.create(service_name=service,passphrase=passphrase,user=user)
+                    service = Services.objects.create(service_name=name,password=password,user=user,login=login)
 
                 except Exception:
 
-                    return Response(status=HTTP_400_BAD_REQUEST,data={"status":"something went wrong service with the same name found"})
+                    return Response(status=HTTP_400_BAD_REQUEST,data={"status":"false"})
                 
 
-                return Response(status=HTTP_200_OK,data={"success":"service created successfully","id":service.id,"service":service.service_name})
+                return Response(status=HTTP_200_OK,data={"status":"true","id":service.id,"service":service.service_name})
 
         return Response({"error":"user must be authenticated"})
     
