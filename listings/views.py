@@ -68,17 +68,30 @@ class Service(ModelViewSet):
                     login = request.data.get("login")
                     password = request.data.get('password')
                     image = request.data.get('image')
+                    category = request.data.get('category')
+                    score = request.data.get('score')
+
+                    if not all([len(name), len(login), password, image, category,score]):
+                        return Response(status=HTTP_400_BAD_REQUEST, data={"status": "false", "message": "One or more fields are missing."})
+
+                    if len(name) <= 4:
+                        return Response(status=HTTP_400_BAD_REQUEST, data={"status": "false", "message": "Name should be at least 5 characters long."})
+
+                    # If all values are present and the size of name is greater than 4, continue with the rest of the code here
+
                     
-                except:
+                    
+                except Exception as e:
+                    print(e)
                     return Response({"status": "false"})
                 
                 user = request.user
 
                 try:
-                    service = Services.objects.create(service_name=name,password=password,user=user,login=login)
+                    service = Services.objects.create(service_name=name,password_hashed=password,user=user,login=login,image=image,category=category,score=score)
 
-                except Exception:
-
+                except Exception as e:
+                    print(e)
                     return Response(status=HTTP_400_BAD_REQUEST,data={"status":"false"})
                 
 

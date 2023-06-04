@@ -9,7 +9,7 @@ class Service(models.Model):
 
     categories = (("work","work"),("priority","priority"),("entertainment","entertainment"),("others","others"),("games","games"),("education","education"))
 
-    service_name = models.CharField(max_length=255)
+    service_name = models.CharField(max_length=255,unique=True)
     password_hashed = models.TextField(blank=True)
     verify_hashed = models.CharField(max_length=255,default="",blank=True)
     key = models.CharField(max_length=200,blank=True)
@@ -21,6 +21,7 @@ class Service(models.Model):
     category = models.CharField(max_length=255,choices=categories,blank=True,null=True)
     login = models.CharField(max_length=255,null=True,blank=True)
     image = models.TextField(max_length=255,null=True,blank=True)
+    score = models.IntegerField(null=True, blank=True,default=75)
 
     
     def save(self,*args,**kwargs):

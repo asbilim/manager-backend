@@ -6,5 +6,5 @@ class ServiceSerializer(ModelSerializer):
     class Meta:
         
         model = Service
-        fields = ["service_name","id","picture"]
+        fields = ["service_name","id","image","login","category","score"]
         many = True
